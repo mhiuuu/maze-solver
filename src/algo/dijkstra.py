@@ -6,19 +6,18 @@ class Dijkstra(Solve):
     def __init__(
         self,
         maze: list[list[int]],
-        visited: list[list[int]],
         sy: int,
         sx: int,
         ey: int,
-        ex: int,
-        step: int,
-        moves: list[tuple]
+        ex: int
     ):
-        super().__init__(maze, visited, sy, sx, ey, ex, step, moves)
+        super().__init__(maze, sy, sx, ey, ex)
 
     def algo(self) -> int | bool:
         distances = [[float('inf')] * len(self.maze[0])
                      for _ in range(len(self.maze))]
+        visited = [[0] * len(self.maze) for _ in range(len(self.maze[0]))]
+        moves = [(1, 0), (-1, 0), (0, -1), (0, 1)]
         distances[self.sy][self.sx] = 0
 
         priority_queue = [(0, (self.sy, self.sx))]
@@ -27,12 +26,12 @@ class Dijkstra(Solve):
             distance, (row, col) = heapq.heappop(priority_queue)
 
             if (row, col) == (self.ey, self.ex):
-                return distance
+                return visited
 
             if distance > distances[row][col]:
                 continue
 
-            for move in self.moves:
+            for move in moves:
                 new_row = row + move[0]
                 new_col = col + move[1]
 
@@ -45,6 +44,6 @@ class Dijkstra(Solve):
                             priority_queue,
                             (new_distance, (new_row, new_col))
                         )
-                        self.visited[new_row][new_col] = distance
+                        visited[new_row][new_col] = 1
 
         return False

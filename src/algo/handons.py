@@ -5,15 +5,12 @@ class HandOns(Solve):
     def __init__(
         self,
         maze: list[list[int]],
-        visited: list[list[int]],
         sy: int,
         sx: int,
         ey: int,
         ex: int,
-        step: int,
-        moves: list[tuple]
     ):
-        super().__init__(maze, visited, sy, sx, ey, ex, step, moves)
+        super().__init__(maze, sy, sx, ey, ex)
 
     def algo(self) -> int | bool:
         left_directions = {
@@ -24,12 +21,12 @@ class HandOns(Solve):
         }
         direction = (0, 1)
         row, col = self.sy, self.sx
+        visited = [[0] * len(self.maze) for _ in range(len(self.maze[0]))]
+
         while True:
-            if not self.visited[row][col]:
-                self.step += 1
-            self.visited[row][col] = self.step
+            visited[row][col] = 1
             if row == self.ey and col == self.ex:
-                return self.step
+                return visited
 
             if not self.valid_move(row + left_directions[direction][0], col + left_directions[direction][1]):
                 if not self.valid_move(row + direction[0], col + direction[1]):

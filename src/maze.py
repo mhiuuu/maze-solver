@@ -27,18 +27,23 @@ maze[ey][ex] = 0
 # ---------------------------------------------------------------
 
 
-def print_maze():
+def print_maze(visited: list[list[int]] = []) -> int:
+    step = 0
     for row in range(len(maze)):
         for col in range(len(maze[0])):
             if maze[row][col] == 1:
                 print("#", end=" ")
             else:
                 try:
-                    print(".", end=" ") if visited[row][col] else print(
-                        " ", end=" ")
+                    if visited[row][col]:
+                        print(".", end=" ")
+                        step += 1
+                    else:
+                        print(" ", end=" ")
                 except:
                     print(" ", end=" ")
         print()
+    return step
 
 
 def print_step(algo: str, step: int):
@@ -49,31 +54,26 @@ def print_step(algo: str, step: int):
 # ---------------------------------------------------------------
 
 
-""" visited = [[0] * width for _ in range(height)]
-dijkstra = Dijkstra(maze, visited, sy, sx, ey, ex, 1, [
-    (1, 0), (-1, 0), (0, -1), (0, 1)])
-dijkstra_steps = dijkstra.algo()
-print_step("dijkstra", dijkstra_steps)
+dijkstra = Dijkstra(maze, sy, sx, ey, ex)
+dijkstra_visited = dijkstra.algo()
+dijkstra_step = print_maze(dijkstra_visited)
+print(dijkstra_step)
+
+dfs = DFS(maze, sy, sx, ey, ex)
+dfs_visited = dfs.algo()
+dfs_step = print_maze(dfs_visited)
+print(dfs_step)
 
 
-visited = [[0] * width for _ in range(height)]
-dfs = DFS(maze, visited, sy, sx, ey, ex, 1, [
-    (1, 0), (-1, 0), (0, -1), (0, 1)])
-dfs_steps = dfs.algo()
-print_step("dfs", dfs_steps)
+bfs = BFS(maze, sy, sx, ey, ex)
+bfs_visited = bfs.algo()
+bfs_step = print_maze(bfs_visited)
+print(bfs_step)
 
 
-visited = [[0] * width for _ in range(height)]
-bfs = BFS(maze, visited, sy, sx, ey, ex, 1, [
-    (1, 0), (-1, 0), (0, -1), (0, 1)])
-bfs_steps = bfs.algo()
-print_step("bfs", bfs_steps) """
-
-
-visited = [[0] * width for _ in range(height)]
-hand_ons = HandOns(maze, visited, sy, sx, ey, ex, 1, [
-    (1, 0), (-1, 0), (0, -1), (0, 1)])
-hand_ons_step = hand_ons.algo()
-print_step("hand on wall", hand_ons_step)
+hand_ons = HandOns(maze, sy, sx, ey, ex)
+hand_ons_visited = hand_ons.algo()
+hand_ons_step = print_maze(hand_ons_visited)
+print(hand_ons_step)
 
 # ---------------------------------------------------------------
