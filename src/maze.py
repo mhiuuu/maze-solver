@@ -76,4 +76,8 @@ hand_ons_visited = hand_ons.algo()
 hand_ons_step = print_maze(hand_ons_visited)
 print(hand_ons_step)
 
+astar = AStar(maze, sy, sx, ey, ex)
+astar_visited = astar.algo()
+astar_step = print_maze(astar_visited)
+print(astar_step)
 # ---------------------------------------------------------------

@@ -6,15 +6,14 @@ class AStar(Solve):
     def __init__(
         self,
         maze: list[list[int]],
-        visited: list[list[int]],
         sy: int,
         sx: int,
         ey: int,
         ex: int,
-        step: int,
-        moves: list[tuple]
     ):
-        super().__init__(maze, visited, sy, sx, ey, ex, step, moves)
+        super().__init__(maze, sy, sx, ey, ex)
+        self.visited = [[False for _ in range(
+            len(maze[0]))] for _ in range(len(maze))]
 
     def algo(self) -> int | bool:
         rows, cols = len(self.maze), len(self.maze[0])
@@ -28,6 +27,8 @@ class AStar(Solve):
 
         while open_set:
             current = heapq.heappop(open_set)[1]
+            # Mark the current cell as visited
+            self.visited[current[0]][current[1]] = True
             if current == goal:
                 path = []
                 while current in came_from:
