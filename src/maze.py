@@ -46,38 +46,75 @@ def print_maze(visited: list[list[int]] = []) -> int:
     return step
 
 
-def print_step(algo: str, step: int):
-    print(f'Step needed for {algo} is {step}')
-    print_maze()
-    print()
-
 # ---------------------------------------------------------------
 
 
+print("Dijkstra")
 dijkstra = Dijkstra(maze, sy, sx, ey, ex)
 dijkstra_visited = dijkstra.algo()
 dijkstra_step = print_maze(dijkstra_visited)
 print(dijkstra_step)
 
+print("DFS")
 dfs = DFS(maze, sy, sx, ey, ex)
 dfs_visited = dfs.algo()
 dfs_step = print_maze(dfs_visited)
 print(dfs_step)
 
-
+print("BFS")
 bfs = BFS(maze, sy, sx, ey, ex)
 bfs_visited = bfs.algo()
 bfs_step = print_maze(bfs_visited)
 print(bfs_step)
 
-
+print("Wall Following")
 hand_ons = HandOns(maze, sy, sx, ey, ex)
 hand_ons_visited = hand_ons.algo()
 hand_ons_step = print_maze(hand_ons_visited)
 print(hand_ons_step)
 
-astar = AStar(maze, sy, sx, ey, ex)
-astar_visited = astar.algo()
-astar_step = print_maze(astar_visited)
-print(astar_step)
 # ---------------------------------------------------------------
+""" dfs_stats, bfs_stats, dijkstra_stats, wallfollowing_stats = [], [], [], []
+
+
+def get_step(visited: list) -> int:
+    step = 0
+    for i in visited:
+        for j in i:
+            if j == 1:
+                step += 1
+    return step
+
+
+for i in range(10, 100):
+    width = i
+    height = i
+    generator = MazeGenerator(width, height)
+    generator.create_maze(1, 1)
+    maze = generator.get_maze()
+    # -------------------------------------------------------------------------------
+    ey, ex = random.randint(1, height - 2), width - 1 + (width % 2 == 0)
+    while maze[ey][ex-1] == 1:
+        ey = random.randint(1, height - 2)
+    maze[ey][ex] = 0
+    sy, sx = random.randint(1, height - 2), 0
+    while maze[sy][sx+1] == 1:
+        sy = random.randint(1, height - 2)
+    maze[sy][sx] = 0
+    # -------------------------------------------------------------------------------
+    dijkstra = Dijkstra(maze, sy, sx, ey, ex)
+    dijkstra_visited = dijkstra.algo()
+    dijkstra_stats.append(get_step(dijkstra_visited))
+
+    dfs = DFS(maze, sy, sx, ey, ex)
+    dfs_visited = dfs.algo()
+    dfs_stats.append(get_step(dfs_visited))
+
+    bfs = BFS(maze, sy, sx, ey, ex)
+    bfs_visited = bfs.algo()
+    bfs_stats.append(get_step(bfs_visited))
+
+    hand_ons = HandOns(maze, sy, sx, ey, ex)
+    hand_ons_visited = hand_ons.algo()
+    wallfollowing_stats.append(get_step(hand_ons_visited))
+ """

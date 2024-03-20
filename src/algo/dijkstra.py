@@ -19,7 +19,7 @@ class Dijkstra(Solve):
         visited = [[0] * len(self.maze) for _ in range(len(self.maze[0]))]
         moves = [(1, 0), (-1, 0), (0, -1), (0, 1)]
         distances[self.sy][self.sx] = 0
-
+        visited[self.sy][self.sx] = 1
         priority_queue = [(0, (self.sy, self.sx))]
 
         while priority_queue:
